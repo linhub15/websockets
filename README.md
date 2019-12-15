@@ -8,3 +8,16 @@ Docs - https://docs.microsoft.com/en-ca/aspnet/core/tutorials/signalr-typescript
 
 ## Rxjs Web sockets
 https://rxjs-dev.firebaseapp.com/api/webSocket/webSocket
+
+
+# Dev setup
+* Dotnet Core 2.2
+* Node v10+
+* Yarn v1.21.1+
+
+## Run stuff
+`dotnet run -p api` - build and serve the api
+
+`yarn` - resolve dependencies
+
+`yarn run ng serve` - run local dev server
