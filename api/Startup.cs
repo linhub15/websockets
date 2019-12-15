@@ -50,10 +50,16 @@ namespace api
             app.UseHttpsRedirection();
             app.UseMvc();
 
-            app.UseWebSockets();
+            var webSocketOptions = new WebSocketOptions() 
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(120),
+                ReceiveBufferSize = 4 * 1024
+            };
+
+            app.UseWebSockets(webSocketOptions);
             app.UseSignalR(options =>
             {
-                options.MapHub<MessageHub>("/hub");
+                options.MapHub<MessageHub>("/messages");
             });
 
             app.Use(async (context, next) =>

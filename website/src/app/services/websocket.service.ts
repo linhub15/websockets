@@ -7,21 +7,12 @@ import * as signalR from "@aspnet/signalr";
 })
 export class WebsocketService {
   subject = webSocket("wss://localhost:5001/ws");
-  signalR = webSocket("wss://localhost:5001/hub");
+  signalR = webSocket("wss://localhost:5001/messages");
 
   private hubConnection: signalR.HubConnection;
 
-  public startConnection() {
-    this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:5001/hub')
-      .build();
 
-    this.hubConnection.start()
-      .then(() => console.log('connection started'))
-      .catch(err => console.log('error while connecting: ' + err));
-  }
-
-  public openWebSocket() {
+  public openWebSocket_ws() {
     this.subject.subscribe(
       msg => console.log('message received: ' + msg), // Called whenever there is a message from the server.
       err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
@@ -29,13 +20,23 @@ export class WebsocketService {
     );
   }
 
-  public openSignalRService() {
+  public openSignalR() {
     this.signalR.subscribe(
       msg => console.log('message received: ' + msg),
       err => console.error(err),
       () => console.log('complete')
     );
 
-    this.signalR.next({message: 'hello'});
+    this.signalR.next({ message: 'hello' });
+  }
+  
+  public startConnection() {
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl('/messages')
+      .build();
+
+    this.hubConnection.start()
+      .then(() => console.log('connection started'))
+      .catch(err => console.log('error while connecting: ' + err));
   }
 }

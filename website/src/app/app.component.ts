@@ -16,9 +16,9 @@ export class AppComponent {
   ) {}
 
   ngOnInit() {
-    this.websocket.startConnection();
-    // this.websocket.openWebSocket();
-    // this.websocket.openSignalRService();
+    this.websocket.openWebSocket_ws();
+    // this.websocket.openSignalR();
+    // this.websocket.startConnection();
   }
 
 
