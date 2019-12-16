@@ -12,17 +12,15 @@ export class AppComponent {
 
   constructor(
     private websocket: WebsocketService,
-    private values: ValueService
   ) {}
 
   ngOnInit() {
-    this.websocket.openWebSocket_ws();
-    // this.websocket.openSignalR();
-    // this.websocket.startConnection();
+    // this.websocket.connectMessageHub();
+    this.websocket.startConnection();
   }
 
 
-  send() {
-    this.values.sendMessage('hello');
+  send(message: HTMLInputElement) {
+    this.websocket.sendMessage(message.value);
   }
 }

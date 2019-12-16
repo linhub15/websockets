@@ -1,41 +1,23 @@
 import { Injectable } from '@angular/core';
-import { webSocket } from "rxjs/webSocket";
 import * as signalR from "@aspnet/signalr";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
-  subject = webSocket("wss://localhost:5001/ws");
-  signalR = webSocket("wss://localhost:5001/messages");
 
-  private hubConnection: signalR.HubConnection;
+  private connection: signalR.HubConnection;
 
-
-  public openWebSocket_ws() {
-    this.subject.subscribe(
-      msg => console.log('message received: ' + msg), // Called whenever there is a message from the server.
-      err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
-      () => console.log('complete') // Called when connection is closed (for whatever reason).
-    );
-  }
-
-  public openSignalR() {
-    this.signalR.subscribe(
-      msg => console.log('message received: ' + msg),
-      err => console.error(err),
-      () => console.log('complete')
-    );
-
-    this.signalR.next({ message: 'hello' });
+  public sendMessage(message: string) {
+    this.connection.send('notify', 1234, message);
   }
   
   public startConnection() {
-    this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('/messages')
+    this.connection = new signalR.HubConnectionBuilder()
+      .withUrl('https://localhost:5001/message-hub')
       .build();
 
-    this.hubConnection.start()
+    this.connection.start()
       .then(() => console.log('connection started'))
       .catch(err => console.log('error while connecting: ' + err));
   }
