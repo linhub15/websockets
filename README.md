@@ -22,6 +22,6 @@ https://rxjs-dev.firebaseapp.com/api/webSocket/webSocket
 ## Run stuff
 `dotnet run -p api` - build and serve the api
 
-`yarn` - resolve dependencies
+`yarn --cwd website` - resolve dependencies
 
-`yarn run ng serve` - run local dev server
+`yarn --cwd website run ng serve` - run local dev server
